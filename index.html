@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>صفحة المنتج</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f0f4f8;
+      color: #223344;
+      line-height: 1.6;
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+    a {
+      color: #28a745;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #19692c;
+      text-decoration: underline;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(90deg, #1e3c72, #2a5298);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.3rem;
+      letter-spacing: 1.5px;
+      font-weight: 900;
+    }
+    header p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    /* Hero & Slider */
+    .hero {
+      max-width: 620px;
+      margin: -3rem auto 2rem;
+      padding: 1rem 1.5rem 3rem;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 5;
+    }
+    .hero h2 {
+      margin-top: 1.8rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2a5298;
+      letter-spacing: 1.1px;
+    }
+    .slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 25px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.12);
+      user-select: none;
+    }
+    .slider img.slide {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      display: none;
+      border-radius: 25px;
+      transition: opacity 0.5s ease-in-out;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.15);
+    }
+    .slider img.slide.active {
+      display: block;
+      opacity: 1;
+    }
+    .slider button.prev,
+    .slider button.next {
+      position: absolute;
+      top: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      border: none;
+      color: #2a5298;
+      font-size: 2.5rem;
+      padding: 0 0.7rem;
+      cursor: pointer;
+      user-select: none;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(42,82,152,0.25);
+      transition: background-color 0.3s ease;
+    }
+    .slider button.prev:hover,
+    .slider button.next:hover {
+      background: #2a5298;
+      color: #fff;
+    }
+    .slider button.prev {
+      right: 10px;
+    }
+    .slider button.next {
+      left: 10px;
+    }
+
+    /* Sections common style */
+    section {
+      padding: 2rem 1.5rem;
+      max-width: 620px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    section h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #1e3c72;
+      font-weight: 800;
+      border-bottom: 3px solid #28a745;
+      display: inline-block;
+      padding-bottom: 6px;
+    }
+
+    /* Benefits */
+    .benefits ul {
+      list-style: none;
+      padding: 0;
+    }
+    .benefits li {
+      font-size: 1.1rem;
+      margin: 0.8rem 0;
+      padding-right: 1.3rem;
+      position: relative;
+      color: #225522;
+      font-weight: 600;
+    }
+    .benefits li::before {
+      content: '✔';
+      color: #28a745;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 900;
+    }
+
+    /* Testimonials */
+    .testimonials p {
+      font-style: italic;
+      color: #555;
+      margin: 0.8rem 0;
+      border-right: 4px solid #28a745;
+      padding-right: 1rem;
+      font-weight: 600;
+    }
+
+    /* Details */
+    .details p {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    /* Order Form */
+    .order-form form {
+      display: flex;
+      flex-direction: column;
+    }
+    form input, form textarea, form select {
+      border: 2px solid #ccc;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      transition: border-color 0.3s ease;
+    }
+    form input:focus, form textarea:focus, form select:focus {
+      outline: none;
+      border-color: #28a745;
+      box-shadow: 0 0 8px rgba(40, 167, 69, 0.4);
+      background: #f5fff5;
+    }
+    form textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    form button {
+      background: linear-gradient(90deg, #28a745, #19692c);
+      border: none;
+      color: white;
+      font-size: 1.3rem;
+      padding: 1rem;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 900;
+      box-shadow: 0 6px 15px rgba(40, 167, 69, 0.5);
+      transition: background 0.4s ease;
+    }
+    form button:hover {
+      background: linear-gradient(90deg, #19692c, #28a745);
+      box-shadow: 0 8px 20px rgba(25, 105, 44, 0.8);
+    }
+
+    /* Contact */
+    .contact p {
+      font-size: 1.1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem 1rem 2rem;
+      font-size: 0.9rem;
+      color: #777;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      .hero {
+        margin: -2rem 1rem 1rem;
+        padding: 1rem 1rem 2rem;
+      }
+      .hero h2 {
+        font-size: 1.6rem;
+      }
+      section {
+        margin: 1.5rem 1rem;
+        padding: 1.5rem 1rem;
+      }
+      section h3 {
+        font-size: 1.4rem;
+      }
+      form input, form textarea, form select {
+        font-size: 1rem;
+        padding: 0.8rem;
+      }
+      form button {
+        font-size: 1.1rem;
+        padding: 0.9rem;
+      }
+      .slider img.slide {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>صفحة المنتج</title>
+  <style>
+    /* (No changes made to the original styles you provided) */
+    /* ... All your existing CSS remains untouched ... */
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>المنتج الرائع</h1>
+    <p>أفضل حل لاحتياجاتك</p>
+  </header>
+
+  <section class="hero">
+    <div class="slider">
+      <img src="product1.jpg" class="slide active" alt="صورة المنتج 1" />
+      <img src="product2.jpg" class="slide" alt="صورة المنتج 2" />
+      <img src="product3.jpg" class="slide" alt="صورة المنتج 3" />
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+    </div>
+
+    <!-- Order Form -->
+    <section class="order-form" style="margin-top: 2rem;">
+      <h3>اطلب الآن</h3>
+      <form action="https://formsubmit.co/8b6bc2ee1a8160f0614940560213ae17" method="POST">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+
+  <input type="text" placeholder="الاسم الكامل" name="name" required />
+  <input type="tel" placeholder="رقم الهاتف" name="phone" required />
+  
+  <select name="delivery_option" required>
+    <option value="" disabled selected>اختر طريقة التوصيل</option>
+    <option value="to_home">التوصيل للمنزل (10 د.ج)</option>
+    <option value="to_domicile">التوصيل للمقر (5 د.ج)</option>
+  </select>
+
+  <textarea placeholder="العنوان الكامل" name="address" required></textarea>
+  
+  <button type="submit">إرسال الطلب</button>
+</form>
+
+    </section>
+  </section>
+
+  <section class="benefits">
+    <h3>لماذا نحن؟</h3>
+    <ul>
+      <li>جودة عالية</li>
+      <li>سعر منافس</li>
+      <li>دعم فني ممتاز</li>
+      <li>توصيل سريع وآمن</li>
+    </ul>
+  </section>
+
+  <section class="testimonials">
+    <h3>آراء العملاء</h3>
+    <p>“منتج لا غنى عنه، أنصح به بشدة!” - عمرو</p>
+    <p>“خدمة رائعة وجودة ممتازة.” - ليلى</p>
+  </section>
+
+  <section class="details">
+    <h3>تفاصيل المنتج</h3>
+    <p>هذا المنتج مصنوع من أفضل المواد ويوفر لك راحة وأداء لا مثيل له.</p>
+  </section>
+
+  <section class="contact">
+    <p>للمزيد من المعلومات اتصل بنا: 0123456789</p>
+  </section>
+
+  <footer>
+    &copy; 2025 شركتنا. جميع الحقوق محفوظة.
+  </footer>
+
+  <script>
+    // Slider logic with autoplay
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function startAutoSlide() {
+      slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    }
+
+    function stopAutoSlide() {
+      clearInterval(slideInterval);
+    }
+
+    prevBtn.addEventListener('click', () => {
+      stopAutoSlide();
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+      startAutoSlide();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      stopAutoSlide();
+      nextSlide();
+      startAutoSlide();
+    });
+
+    startAutoSlide();
+  </script>
+
+</body>
+
+
+</html>
